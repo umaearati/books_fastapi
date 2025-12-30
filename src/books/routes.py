@@ -10,12 +10,7 @@ from fastapi import APIRouter
 
 book_router = APIRouter()
 
-book_router.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+
 
 
 
@@ -49,7 +44,7 @@ async def delete_book(book_id: int):
 
 
 @book_router.put("/{book_id}")
-async def update_book(book_id: int, updated_book: Book):
+async def update_book(book_id: int, updated_book: BookUpdateModel):
     for index, book in enumerate(books):
         if book["id"] == book_id:
             books[index] = updated_book.dict()
