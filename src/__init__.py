@@ -2,6 +2,10 @@ from fastapi import FastAPI
 from src.books.routes import book_router
 from contextlib import asynccontextmanager
 from src.db.main import init_db
+from fastapi.middleware.cors import CORSMiddleware
+
+
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -19,6 +23,13 @@ app = FastAPI(
     lifespan=lifespan
 ) 
 
-app.include_router(book_router,prefix="/books",tags=["books"])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(book_router,prefix=f"/api/{version}/books",tags=["books"])
 
 # this is my first commit 

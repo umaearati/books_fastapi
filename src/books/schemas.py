@@ -1,29 +1,42 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from typing import Optional
-from pydantic import BaseModel 
+import uuid
+from datetime import date, datetime
+from typing import List
 
-app = FastAPI()
+from pydantic import BaseModel
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# from src.reviews.schemas import ReviewModel
+# from src.tags.schemas import TagModel
 
 
 class Book(BaseModel):
-    id: int
+    uid: uuid.UUID
     title: str
     author: str
-    year: int
-    
-    
-class BookUpdateModel(BaseModel):
-    title: Optional[str] = None   
+    publisher: str
+    published_date: date
+    page_count: int
+    language: str
+    created_at: datetime
+    update_at: datetime
+
+
+# class BookDetailModel(Book):
+#     reviews: List[ReviewModel]
+#     tags:List[TagModel]
+
+
+class BookCreateModel(BaseModel):
+    title: str
     author: str
-    year: int
-    
-    
-    
+    publisher: str
+    published_date: str
+    page_count: int
+    language: str
+
+
+class BookUpdateModel(BaseModel):
+    title: str
+    author: str
+    publisher: str
+    page_count: int
+    language: str
